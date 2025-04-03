@@ -1,0 +1,8 @@
+numpy
+pillow
+torch
+torchvision
+matplotlib
+pyyaml
+pycuda
+tensorrt

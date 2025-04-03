@@ -1,0 +1,31 @@
+# config.yaml
+split_data:
+  root_dir: "animaldata"
+  output_dir: "split_animal_data"
+  train_ratio: 0.8
+
+preprocess_data:
+  train_dir: "split_animal_data/train"
+  test_dir: "split_animal_data/test"
+  image_size: [224, 224]
+  normalize: true
+  augment: true
+  batch_size: 32
+
+inference:
+  model_path: "trained_resnet18.pt"
+  image_dir: "/media/nlg/630978C159892116/DDisk/IVSRRRRRRRRRRRRRRRR/Classification/split_animal_data/test/butterfly"
+  image_size: [224, 224]
+  onnx_path: "trained_resnet18.onnx"
+  batch_size: 4
+  opset_version: 16
+
+tensorrt:
+  onnx_model_path: "trained_resnet18.onnx"
+  engine_file_path: "trained_resnet18.engine"
+  workspace_size: 1073741824  # 1GB (1 << 30 bytes)
+  enable_fp16: true  # Bật FP16 nếu phần cứng hỗ trợ
+  optimization_profile:
+    min_shape: [1, 3, 224, 224]  # Kích thước tối thiểu (batch=1)
+    opt_shape: [4, 3, 224, 224]  # Kích thước tối ưu (batch=4)
+    max_shape: [8, 3, 224, 224]  # Kích thước tối đa (batch=8)
